@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        Simple Throttle Implementation
+    </head>
+    <body>
+        <h1>Throttle</h1>
+        <input type="text" id="searchInput" placeholder="Type here...">
+        <div id="output"></div>
+        <script>
+
+            function throttle(func,delay) {
+                let throttleOn = false;
+
+                return function(...args){
+                    if(!throttleOn){
+
+                        throttleOn = true;
+
+                        func(...args);
+
+                        setTimeout(() => {
+                            throttleOn = false;
+                        },delay);
+                    }
+                }
+            }
+
+            function handleSearch(event){
+                const time = new Date().toLocaleString();
+                document.getElementById('output').textContent =  `Search for: ${event.target.value} at ${time}`;
+            }
+
+            const throttledSearch = throttle(handleSearch,5000);
+
+            document.getElementById('searchInput').addEventListener('input',throttledSearch);
+
+        </script>
+    </body>
+</html>

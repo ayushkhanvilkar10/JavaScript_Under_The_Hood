@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Debounce Implementation</title>
+    </head>
+    <body>
+        <h1>Debounce</h1>
+        <input type="text" id="searchInput" placeholder="Type here...">
+        <div id="output"></div>
+        <script>
+
+            function debounce(func,delay){
+                let timeoutId;
+                
+                return function(...args){
+                    if(timeoutId){
+                        clearTimeout(timeoutId);
+                    }
+
+                    timeoutId = setTimeout(()=> func(...args),delay);
+
+                }
+            }
+
+            function handleSearch(event){
+                const time = new Date().toLocaleTimeString();
+                document.getElementById('output').textContent = `Search for: ${event.target.value} at ${time}`
+            }
+
+            const debouncedSearch = debounce(handleSearch,2000);
+
+            document.getElementById('searchInput').addEventListener('input',debouncedSearch);
+        </script>
+    </body>
+</html>
